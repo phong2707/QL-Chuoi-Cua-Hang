@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
-export function resource(router: Router, name: string, controller: any) {
-  // Bind all methods to controller instance
+export function resource(router: any, name: string, controller: any) { // Đổi Router thành any ở đây
   const boundMethods: Record<string, any> = {};
   const methods = ['index', 'show', 'new', 'edit', 'create', 'update', 'destroy'];
 
@@ -11,7 +10,6 @@ export function resource(router: Router, name: string, controller: any) {
     }
   });
 
-  // Route mapping
   if (boundMethods.index) router.get(`/${name}`, boundMethods.index);
   if (boundMethods.new) router.get(`/${name}/new`, boundMethods.new);
   if (boundMethods.show) router.get(`/${name}/:id`, boundMethods.show);
