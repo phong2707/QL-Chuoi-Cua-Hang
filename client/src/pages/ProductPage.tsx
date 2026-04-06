@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MainLayout } from '../layouts/MainLayout';
-import { Plus, Edit, Trash2, Package, Search, Filter, X } from 'lucide-react';
+import { Plus, Edit, Trash2, Search, X } from 'lucide-react';
 
 export const ProductPage = () => {
   const [products, setProducts] = useState([]);
