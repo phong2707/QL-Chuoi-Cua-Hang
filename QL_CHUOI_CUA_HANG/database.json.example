@@ -1,0 +1,7 @@
+{
+  "dev": {
+    "driver": "sqlite3",
+    "filename": "./database/app.db",
+    "migrations-dir": "src/configs/database/migrations"
+  }
+}

@@ -1,0 +1,145 @@
+/* Reset cơ bản */
+.login-container {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Hình nền của bạn */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://tenkujapan.vn/wp-content/uploads/2023/11/1-1.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.login-card {
+    /* Nền trắng đục để nhìn rõ nội dung bất kể hình nền phía sau */
+    background: rgba(255, 255, 255, 0.92); 
+    backdrop-filter: blur(10px); /* Làm mờ nhẹ nền phía sau card */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login-card h2 {
+    margin-bottom: 8px;
+    color: #0f172a; /* Màu xanh đen than - rất rõ chữ */
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.login-card p {
+    color: #475569; /* Xám đậm để dễ đọc hơn màu xanh nhạt cũ */
+    margin-bottom: 32px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Group các ô input */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #334155;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    background: #fff;
+}
+
+/* Nút bấm chính */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb; /* Màu xanh Royal chuyên nghiệp */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.2s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* Đường kẻ ngăn cách */
+.divider {
+    margin: 28px 0;
+    display: flex;
+    align-items: center;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+/* Nút Google */
+.google-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    /* Loại bỏ max-width cũ để nút Google tự căn theo khung */
+}
+
+/* Link chuyển đổi đăng nhập/đăng ký */
+.auth-footer {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #475569;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}

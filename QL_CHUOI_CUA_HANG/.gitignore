@@ -1,0 +1,44 @@
+# --- Dependency Directories ---
+node_modules/
+jspm_packages/
+
+# --- TypeScript / Build Output ---
+# Loại bỏ thư mục build (dựa trên script "build": "tsc" của anh)
+dist/
+out/
+build/
+*.tsbuildinfo
+
+# --- Environment Variables ---
+# Tuyệt đối không đẩy file này lên Git để bảo mật
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+database.json
+
+# --- Debug / Logs ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Database (SQLite) ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- OS / Editor ---
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+
+# --- Optional: Testing ---
+coverage/

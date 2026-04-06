@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "ES2020",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@configs": ["configs"],
+      "@configs/*": ["configs/*"],
+      "@models": ["app/models"],
+      "@models/*": ["app/models/*"],
+      "@controllers": ["app/controllers"],
+      "@controllers/*": ["app/controllers/*"],
+      "@routes": ["configs/routes"],
+      "@routes/*": ["configs/routes/*"],
+      "@lib": ["lib"],
+      "@lib/*": ["lib/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
+

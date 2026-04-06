@@ -1,0 +1,190 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// --- PHÂN QUYỀN & USER ---
+
+model User {
+  id           String     @id @default(uuid())
+  fullName     String
+  email        String     @unique
+  passwordHash String
+  branchId     String?
+  createdAt    DateTime   @default(now())
+  isActive     Boolean    @default(true)
+  branch       Branch?    @relation(fields: [branchId], references: [id])
+  userRoles    UserRole[]
+  orders       Order[]
+}
+
+model Role {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  description     String?
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+}
+
+model UserRole {
+  userId String
+  roleId Int
+  user   User   @relation(fields: [userId], references: [id])
+  role   Role   @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+}
+
+model Feature {
+  id          Int          @id @default(autoincrement())
+  featureName String       @unique
+  isActive    Boolean      @default(true)
+  permissions Permission[]
+}
+
+model Permission {
+  id              Int              @id @default(autoincrement())
+  featureId       Int
+  actionCode      String           @unique
+  description     String?
+  feature         Feature          @relation(fields: [featureId], references: [id])
+  rolePermissions RolePermission[]
+}
+
+model RolePermission {
+  roleId       Int
+  permissionId Int
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+model Branch {
+  id              String            @id @default(uuid())
+  name            String
+  address         String
+  city            String
+  users           User[]
+  branchInventory BranchInventory[]
+  orders          Order[]
+}
+
+// --- NGHIỆP VỤ F&B ---
+
+model Product {
+  id         String      @id @default(uuid())
+  name       String
+  basePrice  Float
+  categoryId Int
+  isActive   Boolean     @default(true)
+  category   Category    @relation(fields: [categoryId], references: [id])
+  recipes    Recipe[]
+  orderItems OrderItem[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model Ingredient {
+  id              String            @id @default(uuid())
+  name            String
+  unit            String
+  minStockLevel   Float
+  recipes         Recipe[]
+  branchInventory BranchInventory[]
+}
+
+model Recipe {
+  productId        String
+  ingredientId     String
+  quantityRequired Float
+  product          Product    @relation(fields: [productId], references: [id])
+  ingredient       Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@id([productId, ingredientId])
+}
+
+model BranchInventory {
+  branchId     String
+  ingredientId String
+  currentStock Float
+  branch       Branch     @relation(fields: [branchId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@id([branchId, ingredientId])
+}
+
+// --- BÁN HÀNG ---
+
+model Order {
+  id          String      @id @default(uuid())
+  branchId    String
+  staffId     String
+  customerId  String?
+  totalAmount Float
+  status      String      @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  createdAt   DateTime    @default(now())
+  
+  branch      Branch      @relation(fields: [branchId], references: [id])
+  staff       User        @relation(fields: [staffId], references: [id])
+  customer    Customer?   @relation(fields: [customerId], references: [id])
+  orderItems  OrderItem[]
+  invoice     Invoice?
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Float
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Invoice {
+  id            String   @id @default(uuid())
+  orderId       String   @unique
+  paymentMethod String
+  finalAmount   Float
+  issuedAt      DateTime @default(now())
+  order         Order    @relation(fields: [orderId], references: [id])
+}
+
+// --- KHÁCH HÀNG & VÍ ---
+
+model Customer {
+  id       String   @id @default(uuid())
+  fullName String
+  phone    String   @unique
+  orders   Order[]
+  wallet   Wallet?
+}
+
+model Wallet {
+  id           String              @id @default(uuid())
+  customerId   String              @unique
+  balance      Float               @default(0)
+  customer     Customer            @relation(fields: [customerId], references: [id])
+  transactions WalletTransaction[]
+}
+
+model WalletTransaction {
+  id        String   @id @default(uuid())
+  walletId  String
+  amount    Float
+  type      String   // DEPOSIT, PAYMENT
+  createdAt DateTime @default(now())
+  wallet    Wallet   @relation(fields: [walletId], references: [id])
+}
